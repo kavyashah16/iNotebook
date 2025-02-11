@@ -7,6 +7,8 @@ import NoteCard from "./components/NoteCard";
 import Create from "./components/Create";
 import About from "./components/About";
 import Alert from "./components/Alert";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
               <Route path="/view" element={<NoteCard />} />
               <Route path="/create" element={<Create />} />
               <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
             </Routes>
           </div>
         </Router>
