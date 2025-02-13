@@ -1,14 +1,21 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
+import { useNavigate } from "react-router-dom";
 
-const NoteCard = () => {
+const NoteCard = (props) => {
   const context = useContext(noteContext);
   const { notes, getNote, updateNote } = context;
+  let navigate = useNavigate();
 
   useEffect(() => {
-    getNote();
-  }, [getNote]);
+    if (localStorage.getItem("token")) {
+        getNote();  
+    } else {
+        navigate("/login");
+    }
+}, [navigate, getNote]);  
+
 
   const [note, setNote] = useState({
     etitle: "",
@@ -20,6 +27,7 @@ const NoteCard = () => {
     e.preventDefault();
     updateNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
+    props.showAlert("Notes updated", "success");
   };
 
   const onChange = (e) => {
@@ -31,6 +39,7 @@ const NoteCard = () => {
 
   const updateNoteModal = (currentNote) => {
     ref.current.click();
+    
 
     setNote({
       id: currentNote._id,
@@ -38,6 +47,7 @@ const NoteCard = () => {
       edescription: currentNote.description,
       etag: currentNote.tag,
     });
+
   };
 
   return (
